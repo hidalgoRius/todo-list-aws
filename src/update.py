@@ -6,13 +6,13 @@ import todoList
 
 def update(event, context):
     """Update an existing todo element.
-    Identified by path parameter. 
+    Identified by path parameter.
     Path: PUT todos/{id}
-    Mandatory to receive JSON format and required at least "text" property on JSON payload.
-    
-    :event: environment variables such as payload, path paramethers, etc. 
+    Mandatory to receive JSON format and required at least "text" 
+    property on JSON payload.
+    :event: environment variables such as payload, path paramethers, etc.
     :context: --
-    :raise Exception if mandatory fields are not received on JSON Payload.    
+    :raise Exception if mandatory fields are not received on JSON Payload.
     :return: An object with two properties: (int) statusCode and (string) body.
     """
     data = json.loads(event['body'])
