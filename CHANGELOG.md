@@ -7,4 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2023-6-11
 ### Added
 - Versión inicial de código.
+- 
+## [1.0.1] - 2023-06-11
+- samconfig.yaml añadir s3_bucket para entorno staging.
 
