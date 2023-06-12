@@ -214,6 +214,50 @@ class TestDatabaseFunctions(unittest.TestCase):
         # Testing file functions
         self.assertRaises(TypeError, delete_item("", self.dynamodb))
         print ('End: test_delete_todo_error')
+        
+    def test_translate_todo(self):
+        print ('---------------------')
+        print ('Start: test_translate_todo')
+        from src.todoList import translate_item
+        from src.todoList import put_item
+
+        # Testing file functions
+        # Table mock
+        responsePut = put_item(self.text, self.dynamodb)
+        print ('Response put_item:' + str(responsePut))
+        idItem = json.loads(responsePut['body'])['id']
+        print ('Id item:' + idItem)
+        self.assertEqual(200, responsePut['statusCode'])
+        responseGet = translate_item(
+                idItem,
+                "fr",
+                self.dynamodb)
+        print ('Response Get:' + str(responseGet))
+        self.assertEqual(
+            self.text,
+            responseGet['text'])
+        print ('End: test_translate_todo')
+    
+    def test_translate_todo_error(self):
+        print ('---------------------')
+        print ('Start: test_translate_todo_error')
+        from src.todoList import translate_item
+        from src.todoList import put_item
+
+        # Testing file functions
+        # Table mock
+        responsePut = put_item(self.text, self.dynamodb)
+        print ('Response put_item:' + str(responsePut))
+        idItem = json.loads(responsePut['body'])['id']
+        print ('Id item:' + idItem)
+        self.assertRaises(200, responsePut['statusCode'])
+        self.assertRaises(
+            Exception,
+            translate_item(
+                None,
+                "AAAAA",
+                self.dynamodb))
+        print ('End: test_translate_todo_error')
 
 if __name__ == '__main__':
     unittest.main()

@@ -157,11 +157,9 @@ def create_todo_table(dynamodb):
 def translate_item(key, targetLang, dynamodb=None):
     item = get_item(key, dynamodb)
     try:
-        sourceLang = aws_comprehend(item['text'], 'us-east-1')
-        item['text'] = aws_translate(sourceLang,
+        item['text'] = aws_translate(aws_comprehend(item['text'], 'us-east-1'),
                                      targetLang,
                                      item['text'], 'us-east-1')
-
     except ClientError as e:
         print(e.response['Error']['Message'])
     else:
@@ -177,13 +175,12 @@ def aws_translate(sourceLang, targetLang, text, aws_region):
     :text: Text to translate
     :aws_region: AWS region
     :return: String containing translated text
-    TODO:: Ideally catch exceptions. To be improved on future releases :)
     """
     translate = boto3.client(service_name='translate',
                              region_name=aws_region, use_ssl=True)
-    result = translate.translate_text(Text="Hello, World",
-                                      SourceLanguageCode="en",
-                                      TargetLanguageCode="de")
+    result = translate.translate_text(Text=text,
+                                      SourceLanguageCode=sourceLang,
+                                      TargetLanguageCode=targetLang)
     return result.get('TranslatedText')
 
 
@@ -193,7 +190,6 @@ def aws_comprehend(text, aws_region):
     :text: Text that we want to know their language.
     :aws_region: AWS region
     :return: String containing the language code
-    TODO:: Ideally catch exceptions. To be improved on future releases :)
     """
     comprehend = boto3.client(service_name='comprehend',
                               region_name=aws_region)
