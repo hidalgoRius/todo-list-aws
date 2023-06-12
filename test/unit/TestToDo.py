@@ -57,14 +57,15 @@ class TestDatabaseFunctions(unittest.TestCase):
         #self.assertIn('todoTable', self.table_local.name)
         print ('End: test_table_exists')
     
-    def test_get_item_error(self):
+    #TEST.
+    def test_get_table_error(self):
         print ('---------------------')
-        print ('Start: test_get_item_error')
+        print ('Start: test_get_table')
         # Testing file functions
-        from src.todoList import get_item
-        self.assertRaises(Exception, get_item("", self.dynamodb))
-        print ('End: test_get_item_error')
-
+        from src.todoList import get_table
+        self.assertRaises(Exception, get_table(None))
+        print ('End: test_get_table_error')
+    
     def test_put_todo(self):
         print ('---------------------')
         print ('Start: test_put_todo')
@@ -110,6 +111,14 @@ class TestDatabaseFunctions(unittest.TestCase):
             self.text,
             responseGet['text'])
         print ('End: test_get_todo')
+    
+    def test_get_todo_error(self):
+        print ('---------------------')
+        print ('Start: test_get_todo_error')
+        # Testing file functions
+        from src.todoList import get_item
+        self.assertRaises(Exception, get_item("", self.dynamodb))
+        print ('End: test_get_todo_error')
     
     def test_list_todo(self):
         print ('---------------------')
