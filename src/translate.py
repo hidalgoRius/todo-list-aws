@@ -1,5 +1,7 @@
 # 2023-06-12 Pau Hidalgo Rius
 # Posible solución del Apartado C caso práctico 1
+# DISCLAIMER: No tengo expertise en lenguage PYTHON, primera vez que
+# lo uso.
 import json
 import decimalencoder
 import todoList
