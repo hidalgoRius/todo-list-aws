@@ -21,6 +21,8 @@ def get_table(dynamodb=None):
     return table
 
 
+#Unit test for success and error
+#test_get_todo, test_get_todo_error
 def get_item(key, dynamodb=None):
     table = get_table(dynamodb)
     try:
@@ -38,6 +40,8 @@ def get_item(key, dynamodb=None):
             return result['Item']
 
 
+#Unit test for success
+#test_list_todo
 def get_items(dynamodb=None):
     table = get_table(dynamodb)
     # fetch todo from the database
@@ -45,6 +49,8 @@ def get_items(dynamodb=None):
     return result['Items']
 
 
+#Unit test for success and error
+#test_put_todo_error, test_put_todo
 def put_item(text, dynamodb=None):
     table = get_table(dynamodb)
     timestamp = str(time.time())
