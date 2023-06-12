@@ -152,3 +152,49 @@ def create_todo_table(dynamodb):
         raise AssertionError()
 
     return table
+
+
+def translate_item(key, targetLang, dynamodb=None):
+    item = get_item(key, dynamodb)
+    try:
+        sourceLang = aws_comprehend(item['text'], 'us-east-1')
+        item['text'] = aws_translate(sourceLang,
+                                     targetLang,
+                                     item['text'], 'us-east-1')
+
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print('Result translate_item:'+str(item))
+        return item
+
+
+def aws_translate(sourceLang, targetLang, text, aws_region):
+    """Given a sourceLang targetLang, text and aws_region,
+    calls aws translate to get the text translation.
+    :sourceLang: Text source language
+    :targetLan: Text wanted target language
+    :text: Text to translate
+    :aws_region: AWS region
+    :return: String containing translated text
+    TODO:: Ideally catch exceptions. To be improved on future releases :)
+    """
+    translate = boto3.client(service_name='translate',
+                             region_name=aws_region, use_ssl=True)
+    result = translate.translate_text(Text="Hello, World",
+                                      SourceLanguageCode="en",
+                                      TargetLanguageCode="de")
+    return result.get('TranslatedText')
+
+
+def aws_comprehend(text, aws_region):
+    """Given a text and aws_region,
+    calls aws comprehend to determine source language code
+    :text: Text that we want to know their language.
+    :aws_region: AWS region
+    :return: String containing the language code
+    TODO:: Ideally catch exceptions. To be improved on future releases :)
+    """
+    comprehend = boto3.client(service_name='comprehend',
+                              region_name=aws_region)
+    return comprehend.detect_dominant_language(Text=text)[0]['LanguageCode']
