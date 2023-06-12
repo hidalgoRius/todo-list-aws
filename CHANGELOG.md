@@ -14,4 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.2] - 2023-06-12
 - Añadir comentarios en funciones lambda
 - Añadir urllib3<3 en fichero src/requirements.txt par solucionar el problema con la API
+- 
+## [1.1.0] - 2023-06-12
+- Nueva funcionalidad translate todo, mediante el uso de AWS comprehend y AWS translate.
 
