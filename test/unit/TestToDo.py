@@ -56,7 +56,14 @@ class TestDatabaseFunctions(unittest.TestCase):
         self.assertIn(tableName, self.table.name)
         #self.assertIn('todoTable', self.table_local.name)
         print ('End: test_table_exists')
-        
+    
+    def test_get_item_error(self):
+        print ('---------------------')
+        print ('Start: test_get_item_error')
+        # Testing file functions
+        from src.todoList import get_item
+        self.assertRaises(Exception, get_item("", self.dynamodb))
+        print ('End: test_get_item_error')
 
     def test_put_todo(self):
         print ('---------------------')
